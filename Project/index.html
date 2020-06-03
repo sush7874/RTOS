@@ -3,11 +3,11 @@
 	<title>Sensor Readings</title>
 </head>
 <body>
-	<p id="text1"></p>
+	<p style="font-family:Monaco;"><strong>   Humidity Sensors </strong> </p>
 	<div id="chart_div1" style="width: 600px; height: 140px;"></div>
-	<p id="text2"></p>
+	<p style="font-family:Monaco;"><strong>Temperature Sensors</strong></p>
     <div id="chart_div2" style="width: 600px; height: 140px;"></div>
-		<p id="text3"></p>
+		<p style="font-family:Monaco;"><strong>Ultrasound Sensors</strong></p>
     <div id="chart_div3" style="width: 600px; height: 140px;"></div>
     <p id="demo"></p>
 <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
@@ -86,7 +86,8 @@
 					   redFrom: 90, redTo: 100,
 					   yellowFrom:75, yellowTo: 90,
 					   minorTicks: 5,
-					   max: 100
+					   max: 100,
+						 forceIFrame: true
 					 };
 
 					 var options2 = {
@@ -119,12 +120,12 @@
 					//   data1.setValue(0,1,x);
 					//   chart1.draw(data1,options1);
 					// }
-					document.getElementById("text1").innerHTML =
-					 	"Humidity Sensors ";
-					document.getElementById("text2").innerHTML =
-					 	"Temperature Sensors ";
-					document.getElementById("text3").innerHTML =
-						"Ultrasound Sensors ";
+					// document.getElementById("text1").innerHTML =
+					//  	"Humidity Sensors ";
+					// document.getElementById("text2").innerHTML =
+					//  	"Temperature Sensors ";
+					// document.getElementById("text3").innerHTML =
+					// 	"Ultrasound Sensors ";
 				}
              }, function (error) {
                  console.log("Error: " + error.code);

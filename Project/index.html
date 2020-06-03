@@ -1,0 +1,153 @@
+<html>
+<head>
+	<title>Sensor Readings</title>
+</head>
+<body>
+	<p id="text1"></p>
+	<div id="chart_div1" style="width: 600px; height: 140px;"></div>
+	<p id="text2"></p>
+    <div id="chart_div2" style="width: 600px; height: 140px;"></div>
+		<p id="text3"></p>
+    <div id="chart_div3" style="width: 600px; height: 140px;"></div>
+    <p id="demo"></p>
+<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
+<script>
+
+  var firebaseConfig = {
+         apiKey: "AIzaSyCSInHptGftDqLJQ_udwDpD3zRer4WM9PA",
+         authDomain: "rtos-proj.firebaseapp.com",
+         databaseURL: "https://rtos-proj.firebaseio.com",
+         projectId: "rtos-proj",
+         storageBucket: "rtos-proj.appspot.com",
+         messagingSenderId: "512217807750",
+         appId: "1:512217807750:web:a36783ff1816574201ca07",
+         measurementId: "G-V6ZGT7KFPD"
+         };
+  firebase.initializeApp(firebaseConfig);
+  setInterval(() => {
+             var database = firebase.database();
+             //var reff = database.ref()
+             database.ref().on("value", function (snapshot) {
+                 //var data4 = snapshot.child("Sensors")
+                 data = snapshot.val();
+				 google.charts.load('current', {'packages':['gauge']});
+				 google.charts.setOnLoadCallback(drawChart);
+				    function drawChart() {
+
+
+					 var data1 = google.visualization.arrayToDataTable([
+					   ['Label', 'Value'],
+					   ['Humidity0', data.Sensors["HumiditySensor0"].Value],
+					   ['Humidity1', data.Sensors["HumiditySensor1"].Value],
+					   ['Humidity2', data.Sensors["HumiditySensor2"].Value],
+					   ['Humidity3', data.Sensors["HumiditySensor3"].Value],
+					   ['Humidity4', data.Sensors["HumiditySensor4"].Value],
+					   ['Humidity5', data.Sensors["HumiditySensor5"].Value],
+					   ['Humidity6', data.Sensors["HumiditySensor6"].Value],
+					   ['Humidity7', data.Sensors["HumiditySensor7"].Value],
+					   ['Humidity8', data.Sensors["HumiditySensor8"].Value],
+					   ['Humidity9', data.Sensors["HumiditySensor9"].Value]
+
+
+					 ]);
+					 var data2 = google.visualization.arrayToDataTable([
+					   ['Label', 'Value'],
+
+					   ['Temp0', data.Sensors["TempSensor0"].Value],
+					   ['Temp1', data.Sensors["TempSensor1"].Value],
+					   ['Temp2', data.Sensors["TempSensor2"].Value],
+					   ['Temp3', data.Sensors["TempSensor3"].Value],
+					   ['Temp4', data.Sensors["TempSensor4"].Value],
+					   ['Temp5', data.Sensors["TempSensor5"].Value],
+					   ['Temp6', data.Sensors["TempSensor6"].Value],
+					   ['Temp7', data.Sensors["TempSensor7"].Value],
+					   ['Temp8', data.Sensors["TempSensor8"].Value],
+					   ['Temp9', data.Sensors["TempSensor9"].Value]
+
+
+					 ]);
+					 var data3 = google.visualization.arrayToDataTable([
+					   ['Label', 'Value'],
+
+					   ['Ultrasound0', data.Sensors["UltrasoundSensor0"].Value],
+					   ['Ultrasound1', data.Sensors["UltrasoundSensor1"].Value],
+					   ['Ultrasound2', data.Sensors["UltrasoundSensor2"].Value],
+					   ['Ultrasound3', data.Sensors["UltrasoundSensor3"].Value],
+					   ['Ultrasound4', data.Sensors["UltrasoundSensor4"].Value],
+					   ['Ultrasound5', data.Sensors["UltrasoundSensor5"].Value],
+					   ['Ultrasound6', data.Sensors["UltrasoundSensor6"].Value],
+					   ['Ultrasound7', data.Sensors["UltrasoundSensor7"].Value],
+					   ['Ultrasound8', data.Sensors["UltrasoundSensor8"].Value],
+					   ['Ultrasound9', data.Sensors["UltrasoundSensor9"].Value]
+					 ]);
+
+					 var options1 = {
+					   width: 400, height: 120,
+					   redFrom: 90, redTo: 100,
+					   yellowFrom:75, yellowTo: 90,
+					   minorTicks: 5,
+					   max: 100
+					 };
+
+					 var options2 = {
+					   width: 400, height: 120,
+					   redFrom: 40, redTo: 50,
+					   yellowFrom:30, yellowTo: 40,
+					   minorTicks: 5,
+					   max: 50
+					 };
+
+					 var options3 = {
+					   width: 400, height: 120,
+					   redFrom: 150, redTo: 200,
+					   yellowFrom:120, yellowTo: 150,
+					   minorTicks: 5,
+					   max: 200
+					 };
+					 var chart1 = new google.visualization.Gauge(document.getElementById('chart_div1'));
+					 var chart2 = new google.visualization.Gauge(document.getElementById('chart_div2'));
+					 var chart3 = new google.visualization.Gauge(document.getElementById('chart_div3'));
+
+					 chart1.draw(data1, options1);
+					 chart2.draw(data2, options2);
+					 chart3.draw(data3, options3)
+					//  for(sensors in data.Sensors){
+					//
+					//   var x = data.Sensors[sensors].Value;
+					// 	document.getElementById("demo").innerHTML =
+					// 	"The value of sensor is: " + x;
+					//   data1.setValue(0,1,x);
+					//   chart1.draw(data1,options1);
+					// }
+					document.getElementById("text1").innerHTML =
+					 	"Humidity Sensors ";
+					document.getElementById("text2").innerHTML =
+					 	"Temperature Sensors ";
+					document.getElementById("text3").innerHTML =
+						"Ultrasound Sensors ";
+				}
+             }, function (error) {
+                 console.log("Error: " + error.code);
+             });
+         },4000);
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+
+   //   setInterval(function() {
+   //     /data1.setValue(0, 1, x);
+   //     chart1.draw(data1, options1);
+   //   }, 13000);
+   //   setInterval(function() {
+   //     //data2.setValue(1, 1, 20 + Math.round(20 * Math.random()));
+   //     chart2.draw(data2, options2);
+   //   }, 5000);
+   //   setInterval(function() {
+   //     //data.setValue(2, 1, 20 + Math.round(20 * Math.random()));
+   //     chart3.draw(data3, options3);
+   //   }, 26000);
+   // }
+</script>
+</body>
+</html>
